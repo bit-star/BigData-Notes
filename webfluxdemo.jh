@@ -1,0 +1,190 @@
+
+
+
+
+entity BaseApi {
+
+   /**
+   * 名称
+   */
+  name String,
+     /**
+   * 编码
+   */
+  code String,
+     /**
+   * 类型:api_接口分组、api_接口
+   */
+  type String,
+     /**
+   * 权限标识
+   */
+  authority String,
+     /**
+   * 路径
+   */
+  path String,
+     /**
+   * 状态:0-无效 1-有效
+   */
+  status Boolean,
+     /**
+   * 排序
+   */
+  sortNum Long,
+     /**
+   * 父级ID
+   */
+  parentId Long,
+     /**
+   * 系统ID
+   */
+  sid String,
+     /**
+   * 附加数据
+   */
+  metaInfo String,
+     /**
+   * 备注
+   */
+  remark String,
+  
+}
+
+entity OauthClientDetails {
+	@Id id String 
+ 	clientId String,
+    clientIdIssuedAt Instant,
+    clientSecret String,
+    clientSecretExpiresAt Instant,
+    clientName String,
+    clientAuthenticationMethods String maxlength(1000),
+    authorizationGrantTypes String maxlength(1000),
+    redirectUris String maxlength(1000),
+    scopes String maxlength(1000),
+    clientSettings String maxlength(2000),
+    tokenSettings String maxlength(2000)
+}
+
+entity OauthAuthorization {
+    @Id id String 
+    registeredClientId String,
+    principalName String,
+    authorizationGrantType String,
+    attributes TextBlob,
+    state String maxlength(500),
+    authorizationCodeValue String maxlength(1000),
+    authorizationCodeIssuedAt Instant,
+    authorizationCodeExpiresAt Instant,
+    authorizationCodeMetadata TextBlob,
+    accessTokenValue String maxlength(1000),
+    accessTokenIssuedAt Instant,
+    accessTokenExpiresAt Instant,
+    accessTokenMetadata TextBlob,
+    accessTokenType String,
+    accessTokenScopes String maxlength(1000),
+    refreshTokenValue String maxlength(1000),
+    refreshTokenIssuedAt Instant,
+    refreshTokenExpiresAt Instant,
+    refreshTokenMetadata TextBlob,
+    oidcIdTokenValue String maxlength(1000),
+    oidcIdTokenIssuedAt Instant,
+    oidcIdTokenExpiresAt Instant,
+    oidcIdTokenMetadata TextBlob,
+    oidcIdTokenClaims TextBlob,
+}
+
+entity OauthAuthorizationConsent{
+	registeredClientId String,
+    principalName String,
+    authorities String maxlength(1000)
+}
+
+entity BaseSystem {
+	 /**
+   * 备注
+   */
+   sid String,
+   name String,
+   host String,
+   status String,
+   appId Long,
+   ssoEnabled Boolean,
+   ssoRedirectUri String,
+   deleted Boolean,
+   remark String
+}
+
+
+
+entity DdUser {
+    unionid String,
+    name String,
+    avatar String,
+    stateCode String,
+    managerUserid String,
+    mobile String,
+    hideMobile Boolean
+    telephone String,
+    jobNumber String,
+    title String,
+    email String,
+    workPlace String,
+    remark String,
+    loginId String,
+    exclusiveAccountType String,
+    exclusiveAccount String,
+    orgEmail String,
+    deptIdList String,
+    deptOrderList String,
+    extension String,
+    hiredDate Long,
+    active Boolean,
+    realAuthed Boolean,
+    orgEmailType String,
+    nickname String,
+    senior Boolean,
+    admin Boolean,
+    boss Boolean,
+    leaderInDept String,
+    roleList String,
+    unionEmpExt String,
+    exclusiveAccountCorpName String,
+    exclusiveAccountCorpId String
+}
+
+
+entity DdDept {
+    name String,
+  	orderNum  Long,
+    parentid Long,
+    sourceIdentifier String,
+    createDeptGroup Boolean,
+    autoAddUser Boolean,
+    autoApproveApply Boolean,
+    fromUnionOrg Boolean,
+    tags String,
+    deptGroupChatId String,
+    groupContainSubDept String,
+    hideDept Boolean,
+    deptPermits String,
+    userPermits String,
+    outerDept Boolean,
+    outerPermitDepts String,
+    outerPermitUsers String,
+    orgDeptOwner String,
+    deptManagerUseridList String,
+    sourceIdentifier String,
+    isLeaf Boolean,
+    totalPeople Long
+}
+
+
+relationship ManyToMany {
+  OauthClientDetails to BaseApi
+  DdUser to DdDept
+  OauthClientDetails to DdDept
+  OauthClientDetails to DdUser
+  
+}
+    
